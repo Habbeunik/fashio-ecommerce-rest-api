@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import product from './routes/product';
+import productRouter from './routes/products';
+import customerRouter from './routes/customers';
 
 const api = Router();
 
@@ -9,6 +10,7 @@ api.use(function (req, res, next) {
 	next();
 });
 
-api.use('/product', product);
+api.use('/products', productRouter);
+api.use('/customers', customerRouter);
 
 export default api;

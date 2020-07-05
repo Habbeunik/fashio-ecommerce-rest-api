@@ -10,4 +10,8 @@ export default function (app) {
 	app.use(methodOverride('X-HTTP-Method-Override'));
 
 	app.use('/api', api);
+
+	app.use('*', (req, res) => {
+		res.send({ data: 'ping' });
+	});
 }
