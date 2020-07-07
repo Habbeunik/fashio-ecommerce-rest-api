@@ -5,7 +5,7 @@ const customerRouter = new Router();
 
 customerRouter.get('/:id', controller.getCustomer);
 customerRouter.patch('/:id', controller.updateCustomer);
-customerRouter.post('/', controller.createCustomer);
+customerRouter.post('/signup', controller.createCustomer);
 customerRouter.post('/login', controller.loginCustomer);
 
 export default customerRouter;
