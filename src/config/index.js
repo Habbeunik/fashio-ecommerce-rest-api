@@ -6,6 +6,4 @@ const config = {
 	jwtSecretKey: process.env.FASHIO_JWT_TOKEN
 };
 
-console.log('config', config);
-console.log('process', process.env);
 export default config;

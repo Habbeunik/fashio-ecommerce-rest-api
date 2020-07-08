@@ -15,8 +15,17 @@ async function createCustomer(customer) {
 	return res.rows[0];
 }
 
+async function getOne(match = 'id', value) {
+	const getOneQuery = customerQuery.generateGetOneQuery(match);
+
+	const res = await db.query(getOneQuery, [value]);
+
+	return res.rows[0];
+}
+
 const customerRepository = {
-	createCustomer
+	createCustomer,
+	getOne
 };
 
 export default customerRepository;

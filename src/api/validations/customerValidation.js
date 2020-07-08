@@ -10,3 +10,11 @@ const customerRegSchema = Joi.object({
 
 export const validateCustomerRegData = (data) =>
 	customerRegSchema.validate(data);
+
+const customerLoginSchema = Joi.object({
+	email: Joi.string().email().required(),
+	password: Joi.string().required()
+});
+
+export const validateCustomerLoginData = (data) =>
+	customerLoginSchema.validate(data);

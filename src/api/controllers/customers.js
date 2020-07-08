@@ -1,6 +1,10 @@
 import userService from '../../services/userService';
-import { validateCustomerRegData } from '../validations/customerValidation';
+import {
+	validateCustomerRegData,
+	validateCustomerLoginData
+} from '../validations/customerValidation';
 import { pickFirstValidationErrorMessage } from '../../utils/error';
+import { generateToken } from '../../utils/auth';
 
 export function getCustomer(req, res) {
 	res.status(200).json({});
@@ -14,12 +18,10 @@ export function createCustomer(req, res) {
 	const { value, error } = validateCustomerRegData(req.body);
 
 	if (error) {
-		res
-			.status(400)
-			.send({
-				message: 'Invalid data supplied',
-				data: pickFirstValidationErrorMessage(error)
-			});
+		res.status(400).send({
+			message: 'Invalid data supplied',
+			data: pickFirstValidationErrorMessage(error)
+		});
 	}
 
 	userService
@@ -34,7 +36,38 @@ export function createCustomer(req, res) {
 }
 
 export function loginCustomer(req, res) {
-	res.status(200).json({});
+	const { value, error } = validateCustomerLoginData(req.body);
+
+	if (error) {
+		res.status(400).json({
+			message: 'Invalid data supplied',
+			data: pickFirstValidationErrorMessage(error)
+		});
+	}
+
+	userService
+		.loginCustomer(value)
+		.then(({ error, status, result }) => {
+			if (error) {
+				res.status(status).json({
+					message: error,
+					data: {}
+				});
+				return;
+			}
+
+			res.status(200).json({
+				data: result,
+				message: 'Login success'
+			});
+		})
+		.catch(({ status, error }) => {
+			console.log('called catch yar');
+			res.status(status).json({
+				message: error,
+				data: {}
+			});
+		});
 }
 
 export function addToCart(req, res) {

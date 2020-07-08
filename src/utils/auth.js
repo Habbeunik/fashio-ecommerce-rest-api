@@ -12,3 +12,7 @@ export function hashPassword(password) {
 
 	return bcrypt.hashSync(password, salt);
 }
+
+export function passwordMatches(string, hash) {
+	return bcrypt.compare(string, hash);
+}
