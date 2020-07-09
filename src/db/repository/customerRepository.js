@@ -1,5 +1,5 @@
 import db from '..';
-import customerQuery from '../query/customerQuery';
+import { customerQuery } from '../query';
 
 async function createCustomer(customer) {
 	const { name, email, password, address, phone } = customer;

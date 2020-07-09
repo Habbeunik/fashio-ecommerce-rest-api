@@ -62,7 +62,6 @@ export function loginCustomer(req, res) {
 			});
 		})
 		.catch(({ status, error }) => {
-			console.log('called catch yar');
 			res.status(status).json({
 				message: error,
 				data: {}
