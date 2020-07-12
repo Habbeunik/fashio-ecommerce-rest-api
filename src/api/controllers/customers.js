@@ -4,7 +4,7 @@ import {
 	validateCustomerLoginData
 } from '../validations/customerValidation';
 import { pickFirstValidationErrorMessage } from '../../utils/error';
-import { generateToken } from '../../utils/auth';
+import wishlistService from '../../services/wishlistService';
 
 export function getCustomer(req, res) {
 	res.status(200).json({});
@@ -82,9 +82,59 @@ export function removeFromCart(req, res) {
 }
 
 export function addToWishlist(req, res) {
-	res.status(200).json({});
+	const customerId = req.params.id;
+	const { productId } = req.body;
+
+	if (!customerId || !productId) {
+		res
+			.status(400)
+			.json({ message: 'Customer Id or productId not passed', data: {} });
+		return;
+	}
+
+	wishlistService
+		.add(customerId, productId)
+		.then(({ result }) => {
+			res.status(200).json({
+				message: 'Product successfully saved to wishlist',
+				data: result
+			});
+		})
+		.catch((e) => {
+			res.status(422).json({ message: e, data: {} });
+		});
 }
 
-export function removeFromWishlist(req, res) {
-	res.status(200).json({});
+export function getWishlist(req, res) {
+	const customerId = req.params.id;
+
+	wishlistService
+		.get(customerId)
+		.then(({ result, error }) => {
+			res
+				.status(200)
+				.json({ message: 'Wishlist fetched successfully', data: result });
+		})
+		.catch((error) => {
+			res.status(422).json({ message: error, data: {} });
+		});
+}
+
+export function removeWishlist(req, res) {
+	const customerId = req.params.id;
+	const productId = req.params.productId;
+
+	wishlistService
+		.remove(customerId, productId)
+		.then(() => {
+			res
+				.status(200)
+				.json({ message: 'Item removed from wishlist successfully' });
+		})
+		.catch((e) => {
+			res.status(400).json({
+				message: 'An error ocurred when deleting item',
+				data: e
+			});
+		});
 }

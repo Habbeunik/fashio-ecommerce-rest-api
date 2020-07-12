@@ -13,7 +13,7 @@ async function getProductsInCategories(categories = []) {
 
 async function getById(id) {
 	const res = await db.query(productQuery.getOne, [id]);
-	console.log('res', res);
+
 	return res.rows[0];
 }
 

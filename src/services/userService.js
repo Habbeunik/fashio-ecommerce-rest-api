@@ -1,5 +1,6 @@
 import customerRepository from '../db/repository/customerRepository';
 import { hashPassword, generateToken, passwordMatches } from '../utils/auth';
+import wishlistRepository from '../db/repository/wishlistRepository';
 
 export async function registerCustomer(customer) {
 	try {
