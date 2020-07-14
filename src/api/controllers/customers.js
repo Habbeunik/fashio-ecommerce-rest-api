@@ -5,6 +5,7 @@ import {
 } from '../validations/customerValidation';
 import { pickFirstValidationErrorMessage } from '../../utils/error';
 import wishlistService from '../../services/wishlistService';
+import * as cartService from '../../services/cartService';
 
 export function getCustomer(req, res) {
 	res.status(200).json({});
@@ -70,15 +71,72 @@ export function loginCustomer(req, res) {
 }
 
 export function addToCart(req, res) {
-	res.status(200).json({});
+	const { id: customer_id } = req.params;
+	const { quantity, product_id } = req.body;
+
+	cartService
+		.saveToCart({ customer_id, quantity, product_id })
+		.then(({ result }) => {
+			res
+				.status(200)
+				.json({ message: 'Added to cart successfully', data: result });
+		})
+		.catch((e) => {
+			res.status(422).json({ message: e, data: {} });
+		});
+}
+
+export function getCustomerCartItems(req, res) {
+	const customerId = req.params.id;
+	console.log('callde e controller');
+	cartService
+		.getCustomerCartItems(customerId)
+		.then(({ result }) => {
+			res.status(200).json({
+				message: 'Fetched customer cart items succesfully',
+				data: result
+			});
+		})
+		.catch((e) => {
+			res.status(422).json({ message: e, data: {} });
+		});
 }
 
 export function updateCart(req, res) {
-	res.status(200).json({});
+	const { id: customer_id, productId: product_id } = req.params;
+	const { quantity } = req.body;
+
+	cartService
+		.updateCartItem({
+			quantity,
+			product_id,
+			customer_id
+		})
+		.then(({ result }) => {
+			res.status(200).json({
+				message: 'Cart item updated successfully',
+				data: result
+			});
+		})
+		.catch((e) => {
+			res.status(422).json({ message: e, data: {} });
+		});
 }
 
 export function removeFromCart(req, res) {
-	res.status(200).json({});
+	const { id: customer_id, productId: product_id } = req.params;
+
+	cartService
+		.removeProductFromCustomerCart(customer_id, product_id)
+		.then(({ result }) => {
+			res.status(200).json({
+				message: 'Product succesfully removed from cart',
+				data: result
+			});
+		})
+		.catch((e) => {
+			res.status(422).json({ message: e, data: {} });
+		});
 }
 
 export function addToWishlist(req, res) {

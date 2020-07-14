@@ -15,7 +15,7 @@ export async function getProduct(categories) {
 async function getOneById(id) {
 	try {
 		const product = await productRepository.getById(id);
-		console.log('product', product);
+
 		return { result: product };
 	} catch (e) {
 		return { error: e, errorCode: 422 };

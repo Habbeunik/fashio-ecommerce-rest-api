@@ -10,5 +10,9 @@ customerRouter.post('/login', controller.loginCustomer);
 customerRouter.post('/:id/wishlist', controller.addToWishlist);
 customerRouter.get('/:id/wishlist', controller.getWishlist);
 customerRouter.delete('/:id/wishlist/:productId', controller.removeWishlist);
+customerRouter.post('/:id/cart', controller.addToCart);
+customerRouter.get('/:id/cart', controller.getCustomerCartItems);
+customerRouter.patch('/:id/cart/:productId', controller.updateCart);
+customerRouter.delete('/:id/cart/:productId', controller.removeFromCart);
 
 export default customerRouter;
