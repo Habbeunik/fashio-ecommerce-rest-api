@@ -40,9 +40,20 @@ export async function loginCustomer(values) {
 	}
 }
 
+export async function getById(customerId) {
+	try {
+		const result = await customerRepository.getOne('id', customerId);
+
+		return { result: { ...result, password: undefined } };
+	} catch (e) {
+		throw e;
+	}
+}
+
 const userService = {
 	registerCustomer,
-	loginCustomer
+	loginCustomer,
+	getById
 };
 
 export default userService;

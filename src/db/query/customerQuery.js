@@ -4,9 +4,9 @@ const generateGetOneQuery = (match = 'id') =>
 
 const customerQuery = {
 	create,
+	generateGetOneQuery,
 	getOneByEmail: generateGetOneQuery('email'),
-	getOneById: generateGetOneQuery('id'),
-	generateGetOneQuery
+	getOneById: generateGetOneQuery('id')
 };
 
 export default customerQuery;

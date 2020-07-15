@@ -8,7 +8,18 @@ import wishlistService from '../../services/wishlistService';
 import * as cartService from '../../services/cartService';
 
 export function getCustomer(req, res) {
-	res.status(200).json({});
+	const customerId = req.params.id;
+
+	userService
+		.getById(customerId)
+		.then(({ result }) => {
+			res
+				.status(200)
+				.json({ message: 'customer fetched successfully', data: result });
+		})
+		.catch((e) => {
+			res.status(422).json({ message: e });
+		});
 }
 
 export function updateCustomer(req, res) {
@@ -88,7 +99,6 @@ export function addToCart(req, res) {
 
 export function getCustomerCartItems(req, res) {
 	const customerId = req.params.id;
-	console.log('callde e controller');
 	cartService
 		.getCustomerCartItems(customerId)
 		.then(({ result }) => {
