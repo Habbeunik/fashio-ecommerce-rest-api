@@ -12,6 +12,6 @@ export default function (app) {
 	app.use('/api', api);
 
 	app.use('*', (req, res) => {
-		res.send({ data: 'ping' });
+		res.json({ data: 'Route not found' });
 	});
 }

@@ -18,3 +18,10 @@ const customerLoginSchema = Joi.object({
 
 export const validateCustomerLoginData = (data) =>
 	customerLoginSchema.validate(data);
+
+const addToCartShema = Joi.object({
+	quantity: Joi.number().required(),
+	product_id: Joi.number().required()
+});
+
+export const validateAddToCartData = (data) => addToCartShema.validate(data);

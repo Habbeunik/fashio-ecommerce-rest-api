@@ -9,10 +9,10 @@ const app = express();
 
 loadAppSetup({ app });
 
-const server = new Server({ app, port: config.port });
+const appServer = new Server({ app, port: config.port });
+
+appServer.start();
 
 process.on('exit', () => {
 	db.end();
 });
-
-server.start();
